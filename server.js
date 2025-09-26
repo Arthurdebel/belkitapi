@@ -9,20 +9,13 @@ const lib = require("./server/lib");
 const chat = require("./server/chat")
 global.log = lib.log;
 
-//* EXPRESS FOR ROUTING
- 
+/**
+ * EXPRESS FOR ROUTING
+ */
 const express = require("express");
 const app = express();
 const https = require("https");
-const http = require("http");
-
-/**
- * SSL CERTIFICATES - Let's Encrypt
- */
-const options = { 
-    key: fs.readFileSync("/etc/letsencrypt/live/belkit.pro/privkey.pem"), 
-    cert: fs.readFileSync("/etc/letsencrypt/live/belkit.pro/fullchain.pem") 
-};
+const server = https.createServer(app);
 
 /**
  * SOCKET.IO
