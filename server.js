@@ -17,6 +17,12 @@ const app = express();
 const https = require("https");
 const server = https.createServer(app);
 
+
+const options = { 
+    key: fs.readFileSync("/etc/letsencrypt/live/belkit.pro/privkey.pem"), 
+    cert: fs.readFileSync("/etc/letsencrypt/live/belkit.pro/fullchain.pem") 
+};
+
 /**
  * SOCKET.IO
  */
