@@ -14,12 +14,8 @@ global.log = lib.log;
  */
 const express = require("express");
 const app = express();
-const options = { 
-    key: fs.readFileSync("/etc/letsencrypt/live/belkit.pro/privkey.pem"), 
-    cert: fs.readFileSync("/etc/letsencrypt/live/belkit.pro/fullchain.pem") 
-};
-const https = require("https");
-const server = https.createServer(options, app);
+const http = require("http");
+const server = http.createServer(app);
 
 
 
