@@ -15,7 +15,7 @@ global.log = lib.log;
 const express = require("express");
 const app = express();
 const https = require("https");
-const server = https.createServer(app);
+const server = https.createServer(options, app);
 
 
 const options = { 
