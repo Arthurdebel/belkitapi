@@ -20,3 +20,5 @@ timeout /t 5 /nobreak >nul
 echo.
 echo Reiniciando servidor...
 goto start
+
+

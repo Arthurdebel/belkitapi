@@ -59,7 +59,8 @@ class WhatsappServiceImpl implements WhatsappService
     public function startBlast($data): object
     {
         return $this->sendRequest(self::ROUTE_START_BLAST, [
-            "data" => json_encode($data)
+            "data" => json_encode($data),
+            "delay" => 1,
         ]);
     }
     public function sendText($request, $receiver): object|bool

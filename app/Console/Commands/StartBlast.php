@@ -90,7 +90,6 @@ class StartBlast extends Command
                             'data' => $blastdata,
                             'type' => $campaign->type,
                             'delay' => $campaign->delay,
-							'delay_max' => $campaign->delay_max,
                             'campaign_id' => $campaign->id,
                             'sender' => $campaign->device->body,
                         ];

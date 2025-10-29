@@ -125,3 +125,5 @@ for /l %%i in (15,-1,1) do (
 echo.
 echo Reiniciando servidor...
 goto start
+
+

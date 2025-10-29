@@ -4,7 +4,7 @@
   "description": "Whatsapp gateway.",
   "keywords": ["mpwa", "bot wa","wa web"],
   "license": "CC BY-NC-ND 4.0",
-  "version": "11.4.0",
+  "version": "11.3.0",
   "require": {
     "php": "^8.2",
     "bacon/bacon-qr-code": "^3.0",

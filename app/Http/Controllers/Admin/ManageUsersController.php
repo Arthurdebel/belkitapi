@@ -18,39 +18,33 @@ use Illuminate\Support\Facades\Validator;
 class ManageUsersController extends Controller
 {
     public function index()
-	{
-		$users = User::latest()->paginate(10);
-		$plans = Plans::where('status', 1)->get();
-		$plansJson = $plans->map(function($p){
-			return [
-				'id' => $p->id,
-				'title' => $p->title,
-				'data' => $p->data ?? [],
-				'days' => (int)($p->days ?? 0),
-			];
-		});
-		return view('theme::pages.admin.manageusers', compact('users', 'plans'))->with('plansJson', $plansJson);
-	}
+    {
+        $users = User::latest()->paginate(10);
+        $plans = Plans::all();
+        return view('theme::pages.admin.manageusers', compact('users', 'plans'));
+    }
 
     public function store(Request $request){
-		$request->validate([
-			'username' => 'required|unique:users',
-			'email' => 'required|unique:users',
-			'password' => 'required',
+        $request->validate([
+            'username' => 'required|unique:users',
+            'email' => 'required|unique:users',
+            'password' => 'required',
 			'messages_limit' => 'required',
-			'limit_device' => 'required|numeric',
-			'active_subscription' => 'required',
-		]);
+            'limit_device' => 'required|numeric',
+            'active_subscription' => 'required|',
+        ]);
 
-		if($request->active_subscription == 'active'){
-			$request->validate([
-			   'subscription_expired' => 'required|date',
-			]);
-			if($request->subscription_expired < date('Y-m-d')){
-				return redirect()->back()->with('alert' , ['type' => 'danger', 'msg' => __('Subscription expired must be greater than today')]);
-			}
-		}
+        if($request->active_subscription == 'active'){
+            $request->validate([
+               'subscription_expired' => 'required|date',
+            ]);
 
+            // subscription expired must be greater than today
+            if($request->subscription_expired < date('Y-m-d')){
+                return redirect()->back()->with('alert' , ['type' => 'danger', 'msg' => __('Subscription expired must be greater than today')]);
+            }
+        }
+		
 		$defaultData = [
 			'messages_limit'    => $request->messages_limit,
 			'device_limit'      => $request->limit_device,
@@ -67,33 +61,30 @@ class ManageUsersController extends Controller
 			'send_location'     => false,
 			'send_sticker'      => false,
 			'send_vcard'        => false,
-			'send_template'     => false,
-			'send_poll'         => false,
 			'webhook'           => false,
 			'api'               => false,
 		];
-
+		
 		$data = array_merge(
 			$defaultData,
 			array_map(fn($v) => filter_var($v, FILTER_VALIDATE_BOOLEAN), $request->plan_data ?? [])
 		);
-
-		$user = new User();
-		$user->username = $request->username;
-		$user->email = $request->email;
-		$user->password = bcrypt($request->password);
-		$user->api_key = Str::random(32);
-		$user->chunk_blast = 0;
-		$user->limit_device = $request->limit_device;
-		$user->active_subscription = $request->active_subscription;
+         
+        $user = new User();
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->api_key = Str::random(32);
+        $user->chunk_blast = 0;
+        $user->limit_device = $request->limit_device;
+        $user->active_subscription = $request->active_subscription;
 		$user->level = $request->level;
-		$user->subscription_expired = $request->subscription_expired ?? null;
-		$user->plan_name = $request->plan_name ?: null;
+        $user->subscription_expired = $request->subscription_expired ?? null;
 		$user->plan_data = $data;
-		$user->save();
-
-		return redirect()->back()->with('alert', ['type' => 'success', 'msg' => __('User created successfully')]);
-	}
+        $user->save();
+        return redirect()->back()->with('alert', ['type' => 'success', 'msg' => __('User created successfully')]);
+         
+    }
 	
 	public function loginAsUser($id)
 	{
@@ -129,70 +120,76 @@ class ManageUsersController extends Controller
     }
 	
     public function update(Request $request){
-		$request->validate([
-			'username' => 'required|unique:users,username,'.$request->id,
-			'email' => 'required|unique:users,email,'.$request->id,
+        
+        $request->validate([
+            'username' => 'required|unique:users,username,'.$request->id,
+            'email' => 'required|unique:users,email,'.$request->id,
 			'messages_limit' => 'required|max:10',
-			'limit_device' => 'required|numeric|max:100',
-			'active_subscription' => 'required',
-		]);
+            'limit_device' => 'required|numeric|max:100',
+            'active_subscription' => 'required|',
 
-		if($request->active_subscription == 'active'){
-			$request->validate([
-			   'subscription_expired' => 'required|date',
-			]);
-			if($request->subscription_expired < date('Y-m-d')){
-				return redirect()->back()->with('alert' , ['type' => 'danger', 'msg' => __('Subscription expired must be greater than today')]);
-			}
-		}
+        ]);
+        if($request->active_subscription == 'active'){
+            $request->validate([
+               'subscription_expired' => 'required|date',
+            ]);
 
-		if($request->password != ''){
-			$request->validate([
-				'password' => 'min:6',
-			]);
-		}
-
+            // subscription expired must be greater than today
+            if($request->subscription_expired < date('Y-m-d')){
+                return redirect()->back()->with('alert' , ['type' => 'danger', 'msg' => __('Subscription expired must be greater than today')]);
+            }
+        }
+       
+        if($request->password != ''){
+            $request->validate([
+                'password' => 'min:6',
+            ]);
+        }
+		
 		$defaultData = [
-			'messages_limit' => $request->messages_limit,
-			'device_limit' => $request->limit_device,
-			'ai_message' => false,
-			'schedule_message' => false,
-			'bulk_message' => false,
-			'autoreply' => false,
-			'send_message' => false,
-			'send_media' => false,
-			'send_product' => false,
-			'send_text_channel' => false,
-			'send_list' => false,
-			'send_button' => false,
-			'send_location' => false,
-			'send_sticker' => false,
-			'send_vcard' => false,
-			'send_template' => false,
-			'send_poll' => false,
-			'webhook' => false,
-			'api' => false,
+				'messages_limit' => $request->messages_limit,
+				'device_limit' => $request->limit_device,
+				'ai_message' => false,
+				'schedule_message' => false,
+				'bulk_message' => false,
+				'autoreply' => false,
+				'send_message' => false,
+				'send_media' => false,
+				'send_product' => false,
+				'send_text_channel' => false,
+				'send_list' => false,
+				'send_button' => false,
+				'send_location' => false,
+				'send_sticker' => false,
+				'send_vcard' => false,
+				'webhook' => false,
+				'api' => false,
 		];
-
+		
 		$data = array_merge(
-			$defaultData,
-			array_map(function ($value) { return filter_var($value, FILTER_VALIDATE_BOOLEAN); }, $request->plan_data ?? [])
+				$defaultData,
+				array_map(
+					function ($value) {
+						return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+					},
+					$request->plan_data ?? []
+				)
 		);
 
-		$user = User::find($request->id);
-		$user->username = $request->username;
-		$user->email = $request->email;
-		$user->password = $request->password != '' ? bcrypt($request->password) : $user->password;
-		$user->limit_device = $request->limit_device;
-		$user->active_subscription = $request->active_subscription;
+        $user = User::find($request->id);
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->password = $request->password != '' ? bcrypt($request->password) : $user->password;
+        $user->limit_device = $request->limit_device;
+        $user->active_subscription = $request->active_subscription;
 		$user->level = $request->level;
-		$user->subscription_expired = $request->subscription_expired ?? null;
-		$user->plan_name = $request->plan_name ?: null;
-		$user->plan_data = $data;
-		$user->save();
+        $user->subscription_expired = $request->subscription_expired ?? null;
 
-		return redirect()->back()->with('alert', ['type' => 'success', 'msg' => __('User updated successfully')]);
-	}
+		$user->plan_data = $data;
+		
+        $user->save();
+        return redirect()->back()->with('alert', ['type' => 'success', 'msg' => __('User updated successfully')]);
+    }
 
     public function delete($id){
         $user = User::find($id);

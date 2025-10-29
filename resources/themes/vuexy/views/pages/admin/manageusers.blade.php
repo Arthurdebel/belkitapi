@@ -199,39 +199,28 @@
                                 <option value="admin" class="text-danger">{{ __('Admin') }}</option>
                             </select>
                         </div>
-						<div class="col-md-12">
-							<label class="form-label">{{ __('Plan') }}</label>
-							<select class="form-select" id="plan_selector">
-								<option value="">{{ __('-- Custom --') }}</option>
-								@foreach($plans as $p)
-									<option value="{{ $p->id }}">{{ $p->title }}</option>
-								@endforeach
-							</select>
-						</div>
-						<input type="hidden" name="plan_name" id="plan_name">
                         <div class="col-12">
                             <label class="form-label">{{ __('Plan Features') }}</label>
                             <div class="row g-2">
-								@php
-								$features = [
-										'ai_message' => __('AI Message'),
-										'schedule_message' => __('Schedule Message'),
-										'bulk_message' => __('Bulk Message'),
-										'autoreply' => __('Auto Reply'),
-										'send_message' => __('Send Message'),
-										'send_media' => __('Send Media'),
+                                @php
+                                    $features = [
+                                        'ai_message' => __('AI Message'),
+                                        'schedule_message' => __('Schedule Message'),
+                                        'bulk_message' => __('Bulk Message'),
+                                        'autoreply' => __('Auto Reply'),
+                                        'send_message' => __('Send Message'),
 										'send_product' => __('Send Product'),
 										'send_text_channel' => __('Text To Channel'),
-										'send_list' => __('Send List'),
-										'send_button' => __('Send Button'),
-										'send_location' => __('Send Location'),
-										'send_poll' => __('Send Poll'),
-										'send_sticker' => __('Send Sticker'),
-										'send_vcard' => __('Send VCard'),
-										'webhook' => __('Webhook'),
-										'api' => __('API')
-									];
-								@endphp
+                                        'send_media' => __('Send Media'),
+                                        'send_list' => __('Send List'),
+                                        'send_button' => __('Send Button'),
+                                        'send_location' => __('Send Location'),
+                                        'send_sticker' => __('Send Sticker'),
+                                        'send_vcard' => __('Send VCard'),
+                                        'webhook' => __('Webhook'),
+                                        'api' => __('API')
+                                    ];
+                                @endphp
                                 @foreach ($features as $key => $label)
                                     <div class="col-md-4">
                                         <div class="form-check">
@@ -256,38 +245,11 @@
 
 <!-- Script -->
 <script>
-const PLANS = @json($plansJson);
-
-function setFeatures(features) {
-    $('input[type=checkbox][name^="plan_data["]').each(function(){
-        const key = $(this).attr('name').replace('plan_data[','').replace(']','');
-        const val = !!(features && features[key] === true);
-        $(this).prop('checked', val);
-    });
-    if (features && typeof features.messages_limit !== 'undefined') $('#messages_limit').val(features.messages_limit);
-    if (features && typeof features.device_limit !== 'undefined') $('#limit_device').val(features.device_limit);
-}
-window.addEventListener('load', function() {
-    $(document).ready(function () {
-		$('#plan_selector').on('change', function(){
-			const id = parseInt($(this).val() || 0);
-			const p = PLANS.find(x => x.id === id);
-			if (p) {
-				setFeatures(p.data || {});
-				$('#plan_name').val(p.title);
-			} else {
-				$('#plan_name').val('');
-			}
-		});
-    });
-});
 function addUser() {
     $('#modalLabel').html('{{ __("Add User") }}');
     $('#formUser').attr('action', '{{ route('user.store') }}');
     $('#formUser').trigger('reset');
     $('input[type=checkbox]').prop('checked', false);
-    $('#plan_selector').val('');
-    $('#plan_name').val('');
     $('#modalUser').modal('show');
 }
 
@@ -311,7 +273,7 @@ function editUser(id) {
       $('#messages_limit').val(features.messages_limit ?? 0);
       $('#limit_device').val(features.device_limit ?? 0);
       $('#active_subscription').val(data.active_subscription);
-      $('#level').val(data.level);
+	  $('#level').val(data.level);
       if (data.subscription_expired) {
         $('#subscription_expired').val(data.subscription_expired.substring(0,16));
       }
@@ -320,18 +282,12 @@ function editUser(id) {
         const name = $(this).attr('name').replace('plan_data[','').replace(']','');
         $(this).prop('checked', features[name] === true);
       });
-      $('#plan_name').val(data.plan_name || '');
-      let matched = '';
-      if (data.plan_name) {
-        const m = PLANS.find(p => p.title === data.plan_name);
-        if (m) matched = String(m.id);
-      }
-      $('#plan_selector').val(matched);
+
       $('#modalOverlay').css('display','none');
     },
     error: function(){
       $('#modalOverlay').css('display','none');
-      notyf.error('{{ __("Failed to load user data.") }}');
+	  notyf.error('{{ __("Failed to load user data.") }}');
     }
   });
 }

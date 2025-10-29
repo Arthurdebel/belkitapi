@@ -100,21 +100,5 @@
     'salt_index'    => '1',
 	'is_production' => 'false',
 ),
-  'cashfree' => 
-  array (
-    'status' => 'disable',
-    'app_id' => 'TEST10xxxxxxxxx',
-    'secret_key' => 'cfsk_ma_xxxxxxx',
-    'is_production' => 'false',
-  ),
-  'paylink' => 
-  array (
-    'status' => 'disable',
-    'api_id' => 'APP_ID_1xxxxxx',
-    'secret_key' => '0662xxxxxxxxxxx',
-    'is_production' => 'false',
-  ),
-
-
 
 );

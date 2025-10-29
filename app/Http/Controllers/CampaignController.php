@@ -84,7 +84,6 @@ class CampaignController extends Controller
                 'name' => $request->campaign_name,
                 'type' => $request->type,
                 'delay' => $request->delay,
-				'delay_max' => $request->delay_max,
                 'status' => 'waiting',
                 'message' => json_encode($message),
                 'phonebook_id' => $request->phonebook_id,

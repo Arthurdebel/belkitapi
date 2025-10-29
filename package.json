@@ -16,6 +16,7 @@
     "qrcode": "^1.5.3",
     "sharp": "^0.32.6",
     "socket.io": "^4.7.2",
+    "socket.io-client": "^4.8.1",
     "ulid": "^3.0.1"
   },
   "overrides": {
@@ -27,11 +28,15 @@
     "link-preview-js": "^3.1.0"
   },
   "name": "mpwa",
-  "version": "11.4.0",
+  "version": "11.3.0",
   "description": "Whatsapp remote API multi device, multi instance. Based on onexgen baileys.",
   "main": "server.js",
   "author": "Magd Almuntaser <info@onexgen.com>",
   "license": "CC BY-NC-ND 4.0",
+  "scripts": {
+    "start": "node server.js",
+    "start:livechat": "node -r dotenv/config livechat-server.js dotenv_config_path=./livechat.env"
+  },
   "nodemonConfig": {
     "ignore": [
       "credentials/*"

@@ -6,7 +6,6 @@ const dbs = require('./server/database/index');
 const specs = require('./server/lib/specs');
 require("dotenv").config();
 const lib = require("./server/lib");
-const chat = require("./server/chat")
 global.log = lib.log;
 
 /**
@@ -16,9 +15,6 @@ const express = require("express");
 const app = express();
 const http = require("http");
 const server = http.createServer(app);
-
-
-
 
 /**
  * SOCKET.IO
@@ -52,7 +48,6 @@ app.use(bodyParser.json());
 app.use(express.static("src/public"));
 app.use(require("./server/router"));
 
-chat.setIO(io);
 
 io.on('connection', socket => {
 	console.log("A user connected");

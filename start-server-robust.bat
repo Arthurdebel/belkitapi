@@ -74,3 +74,5 @@ for /l %%i in (10,-1,1) do (
 echo.
 echo Reiniciando servidor...
 goto start
+
+
