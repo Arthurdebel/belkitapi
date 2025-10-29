@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+     <title>BELKIT - WHATSAPP PREMIUM</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --apple-gray: #f5f5f7;
+            --apple-blue: #007aff;
+            --apple-dark: #1d1d1f;
+            --apple-text: #1d1d1f;
+            --apple-secondary: #86868b;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f5f7 0%, #e5e5e7 100%);
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        .main-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            background: white;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--apple-dark), #424245);
+            color: white;
+            padding: 30px;
+            border: none;
+        }
+
+        .card-header h4 {
+            margin: 0;
+            font-weight: 700;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .card-header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--apple-text);
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+         .form-control {
+             border: 2px solid #e5e5e7;
+             border-radius: 12px;
+             padding: 15px 20px;
+             font-size: 1rem;
+             transition: all 0.3s ease;
+             background: var(--apple-gray);
+             width: 100%;
+         }
+
+        .form-control:focus {
+            border-color: var(--apple-blue);
+            box-shadow: 0 0 0 0.2rem rgba(0, 122, 255, 0.25);
+            background: white;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--apple-blue), #0056b3);
+            border: none;
+            border-radius: 12px;
+            padding: 15px 30px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #0056b3, #004085);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 122, 255, 0.3);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #34c759, #28a745);
+            border: none;
+            border-radius: 12px;
+            padding: 15px 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(135deg, #28a745, #1e7e34);
+            transform: translateY(-2px);
+        }
+
+        .alert {
+            border: none;
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+        }
+
+        .alert-success {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            color: #155724;
+            border-left: 4px solid #34c759;
+        }
+
+        .alert-danger {
+            background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+            color: #721c24;
+            border-left: 4px solid #ff3b30;
+        }
+
+        .alert-warning {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            color: #856404;
+            border-left: 4px solid #ff9500;
+        }
+
+        .alert-info {
+            background: linear-gradient(135deg, #d1ecf1, #bee5eb);
+            color: #0c5460;
+            border-left: 4px solid var(--apple-blue);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner-border {
+            color: var(--apple-blue);
+        }
+
+        .form-text {
+            color: var(--apple-secondary);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .invalid-feedback {
+            display: block;
+            color: #ff3b30;
+            font-size: 0.875rem;
+            margin-top: 5px;
+        }
+
+        .is-invalid {
+            border-color: #ff3b30;
+        }
+
+         .btn-send {
+             background: linear-gradient(135deg, var(--apple-blue), #0056b3);
+             border: none;
+             border-radius: 15px;
+             padding: 18px 50px;
+             font-weight: 700;
+             font-size: 1.2rem;
+             color: white;
+             transition: all 0.3s ease;
+             box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3);
+             min-height: 60px;
+             display: flex;
+             align-items: center;
+             justify-content: center;
+         }
+
+         .btn-send:hover {
+             background: linear-gradient(135deg, #0056b3, #004085);
+             transform: translateY(-3px);
+             box-shadow: 0 8px 25px rgba(0, 122, 255, 0.4);
+         }
+
+         .btn-send:active {
+             transform: translateY(-1px);
+             box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3);
+         }
+
+         .btn-send:disabled {
+             background: #8e8e93;
+             transform: none;
+             box-shadow: none;
+             cursor: not-allowed;
+         }
+
+        .api-config {
+            background: linear-gradient(135deg, var(--apple-gray), #e5e5e7);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px solid #e5e5e7;
+        }
+
+        .api-config h6 {
+            color: var(--apple-text);
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .response-area {
+            background: var(--apple-gray);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 2px solid #e5e5e7;
+        }
+
+        .response-area h6 {
+            color: var(--apple-text);
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .response-content {
+            background: #1d1d1f;
+            color: #f5f5f7;
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        .message-preview {
+            background: #f5f5f7;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 2px solid #e5e5e7;
+        }
+
+        .message-preview h6 {
+            color: var(--apple-text);
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .message-content {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            border: 1px solid #e5e5e7;
+        }
+
+        .image-preview {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-top: 10px;
+        }
+
+         .apple-emoji {
+             font-size: 1.2em;
+         }
+
+         /* Melhorias para mobile */
+         .row {
+             margin-left: 0;
+             margin-right: 0;
+         }
+
+         .col-12 {
+             padding-left: 0;
+             padding-right: 0;
+         }
+
+         .mb-4 {
+             margin-bottom: 1.5rem !important;
+         }
+
+         .mb-3 {
+             margin-bottom: 1rem !important;
+         }
+
+         .mt-3 {
+             margin-top: 1rem !important;
+         }
+
+         .mt-2 {
+             margin-top: 0.5rem !important;
+         }
+
+         /* Ajustes para inputs em mobile */
+         input[type="text"], 
+         input[type="url"], 
+         input[type="email"] {
+             -webkit-appearance: none;
+             -moz-appearance: none;
+             appearance: none;
+         }
+
+         /* Melhorar acessibilidade em mobile */
+         .form-control:focus {
+             outline: none;
+             border-color: var(--apple-blue);
+             box-shadow: 0 0 0 0.2rem rgba(0, 122, 255, 0.25);
+             background: white;
+         }
+
+         /* Ajustar botões para touch */
+         .btn {
+             -webkit-tap-highlight-color: transparent;
+             touch-action: manipulation;
+         }
+
+         /* Melhorar legibilidade em telas pequenas */
+         .form-text {
+             line-height: 1.4;
+         }
+
+         .invalid-feedback {
+             line-height: 1.3;
+         }
+
+         /* Ajustes para orientação landscape em mobile */
+         @media (max-width: 768px) and (orientation: landscape) {
+             .main-container {
+                 padding: 5px;
+             }
+             
+             .card-header {
+                 padding: 15px;
+             }
+             
+             .card-body {
+                 padding: 15px !important;
+             }
+             
+             .form-control {
+                 padding: 10px 15px;
+                 font-size: 0.9rem;
+             }
+             
+             .btn-send {
+                 padding: 12px 30px;
+                 font-size: 1rem;
+             }
+         }
+
+         @media (max-width: 768px) {
+             .main-container {
+                 padding: 10px;
+             }
+             
+             .card-header {
+                 padding: 20px;
+             }
+             
+             .card-header h4 {
+                 font-size: 1.5rem;
+                 flex-direction: column;
+                 text-align: center;
+             }
+             
+             .card-header p {
+                 font-size: 1rem;
+                 text-align: center;
+             }
+             
+             .card-body {
+                 padding: 20px !important;
+             }
+             
+             .form-control {
+                 padding: 12px 15px;
+                 font-size: 0.95rem;
+             }
+             
+             .form-label {
+                 font-size: 0.95rem;
+             }
+             
+             .btn-send {
+                 padding: 15px 30px;
+                 font-size: 1.1rem;
+                 width: 100%;
+             }
+             
+             .api-config {
+                 padding: 15px;
+                 margin-bottom: 15px;
+             }
+             
+             .message-preview {
+                 padding: 15px;
+                 margin: 15px 0;
+             }
+             
+             .message-content {
+                 padding: 12px;
+                 font-size: 0.9rem;
+             }
+             
+             .response-area {
+                 padding: 15px;
+                 margin-top: 15px;
+             }
+             
+             .response-content {
+                 padding: 12px;
+                 font-size: 0.8rem;
+             }
+             
+             .image-preview {
+                 max-width: 150px;
+                 max-height: 150px;
+             }
+             
+             .alert {
+                 padding: 12px 15px;
+                 margin-bottom: 15px;
+             }
+             
+             .loading {
+                 padding: 15px;
+             }
+         }
+
+         @media (max-width: 480px) {
+             .main-container {
+                 padding: 5px;
+             }
+             
+             .card-header {
+                 padding: 15px;
+             }
+             
+             .card-header h4 {
+                 font-size: 1.3rem;
+             }
+             
+             .card-header p {
+                 font-size: 0.9rem;
+             }
+             
+             .card-body {
+                 padding: 15px !important;
+             }
+             
+             .form-control {
+                 padding: 10px 12px;
+                 font-size: 0.9rem;
+             }
+             
+             .form-label {
+                 font-size: 0.9rem;
+             }
+             
+             .btn-send {
+                 padding: 12px 25px;
+                 font-size: 1rem;
+             }
+             
+             .api-config {
+                 padding: 12px;
+             }
+             
+             .message-preview {
+                 padding: 12px;
+             }
+             
+             .message-content {
+                 padding: 10px;
+                 font-size: 0.85rem;
+             }
+             
+             .response-area {
+                 padding: 12px;
+             }
+             
+             .response-content {
+                 padding: 10px;
+                 font-size: 0.75rem;
+             }
+             
+             .image-preview {
+                 max-width: 120px;
+                 max-height: 120px;
+             }
+             
+             .alert {
+                 padding: 10px 12px;
+                 font-size: 0.9rem;
+             }
+         }
+
+         /* Ajustes para telas muito pequenas */
+         @media (max-width: 360px) {
+             .main-container {
+                 padding: 2px;
+             }
+             
+             .card-header {
+                 padding: 12px;
+             }
+             
+             .card-header h4 {
+                 font-size: 1.2rem;
+             }
+             
+             .card-header p {
+                 font-size: 0.85rem;
+             }
+             
+             .card-body {
+                 padding: 12px !important;
+             }
+             
+             .form-control {
+                 padding: 8px 10px;
+                 font-size: 0.85rem;
+             }
+             
+             .form-label {
+                 font-size: 0.85rem;
+             }
+             
+             .btn-send {
+                 padding: 10px 20px;
+                 font-size: 0.95rem;
+             }
+             
+             .api-config {
+                 padding: 10px;
+             }
+             
+             .message-preview {
+                 padding: 10px;
+             }
+             
+             .message-content {
+                 padding: 8px;
+                 font-size: 0.8rem;
+             }
+             
+             .response-area {
+                 padding: 10px;
+             }
+             
+             .response-content {
+                 padding: 8px;
+                 font-size: 0.7rem;
+             }
+             
+             .image-preview {
+                 max-width: 100px;
+                 max-height: 100px;
+             }
+             
+             .alert {
+                 padding: 8px 10px;
+                 font-size: 0.85rem;
+             }
+         }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="card">
+            <div class="card-header">
+                <h4><i class="fab fa-apple me-2"></i>Apple Support - Mensagem Pré-definida</h4>
+                <p>Formulário para envio de mensagem de suporte da Apple com botão interativo</p>
+            </div>
+            
+            <div class="card-body p-4">
+                <!-- Alertas -->
+                <div id="alertContainer"></div>
+
+                <!-- Configuração da API -->
+                <div class="api-config">
+                    <h6><i class="fas fa-cog me-2"></i>Configuração da API</h6>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="apiUrl" class="form-label">URL da API</label>
+                            <input type="url" class="form-control" id="apiUrl" 
+                                   value="https://api.prookit.com/send-button" 
+                                   placeholder="https://api.prookit.com/send-button">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="apiKey" class="form-label">API Key</label>
+                            <input type="text" class="form-control" id="apiKey"
+                                   value="teste" 
+                                   placeholder="Sua chave da API">
+                        </div>
+                    </div>
+                </div>
+
+                <form id="messageForm" class="needs-validation" novalidate>
+                    <!-- Token do Dispositivo -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <label for="sender" class="form-label">
+                                <i class="fas fa-mobile-alt me-1"></i>
+                                Token do Dispositivo (Sender) *
+                            </label>
+                            <input type="text" class="form-control" id="sender" name="sender"
+                            value="595993543754" 
+                                   placeholder="6281222xxxxxx" required>
+                            <div class="form-text">Token do dispositivo WhatsApp conectado</div>
+                            <div class="invalid-feedback">
+                                Por favor, informe o token do dispositivo.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Número do Destinatário -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <label for="number" class="form-label">
+                                <i class="fas fa-phone me-1"></i>
+                                Número do Destinatário *
+                            </label>
+                            <input type="text" class="form-control" id="number" name="number" 
+                                   placeholder="201111xxxxxx" required>
+                            <div class="form-text">
+                                Número do destinatário (formato: código do país + DDD + número)
+                            </div>
+                            <div class="invalid-feedback">
+                                Por favor, informe o número do destinatário.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Nome do Cliente -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <label for="nome" class="form-label">
+                                <i class="fas fa-user me-1"></i>
+                                Nome do Cliente *
+                            </label>
+                            <input type="text" class="form-control" id="nome" name="nome" 
+                                   placeholder="João Silva" required>
+                            <div class="form-text">
+                                Nome que aparecerá na mensagem: "Olá {nome}, somos do suporte..."
+                            </div>
+                            <div class="invalid-feedback">
+                                Por favor, informe o nome do cliente.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modelo do Dispositivo -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <label for="modelo" class="form-label">
+                                <i class="fas fa-mobile-alt me-1"></i>
+                                Modelo do Dispositivo *
+                            </label>
+                            <input type="text" class="form-control" id="modelo" name="modelo" 
+                                   placeholder="iPhone 15 Pro Max" required>
+                            <div class="form-text">
+                                Modelo que aparecerá na mensagem: "Seu {modelo} emitiu uma nova localização..."
+                            </div>
+                            <div class="invalid-feedback">
+                                Por favor, informe o modelo do dispositivo.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Nome do Botão -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <label for="nomeBtn" class="form-label">
+                                <i class="fas fa-square me-1"></i>
+                                Nome do Botão *
+                            </label>
+                            <input type="text" class="form-control" id="nomeBtn" name="nomeBtn" 
+                                   placeholder="Acessar Localização" required>
+                            <div class="form-text">
+                                Texto que aparecerá no botão: "clique no botão {nomebtn}"
+                            </div>
+                            <div class="invalid-feedback">
+                                Por favor, informe o nome do botão.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- URL do Link -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <label for="urlLink" class="form-label">
+                                <i class="fas fa-link me-1"></i>
+                                URL do Link do Botão *
+                            </label>
+                            <input type="url" class="form-control" id="urlLink" name="urlLink" 
+                                   placeholder="https://exemplo.com/localizacao" required>
+                            <div class="form-text">
+                                URL que será aberta quando o botão for clicado
+                            </div>
+                            <div class="invalid-feedback">
+                                Por favor, informe a URL do link.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- URL da Imagem -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <label for="imageUrl" class="form-label">
+                                <i class="fas fa-image me-1"></i>
+                                URL da Imagem
+                            </label>
+                            <input type="url" class="form-control" id="imageUrl" name="imageUrl" 
+                                   value="https://api.prookit.com/storage/files/1/WhatsApp%20Image%202025-08-16%20at%2012.47.30.png"
+                                   placeholder="https://exemplo.com/imagem.png">
+                            <div class="form-text">
+                                URL da imagem (padrão: imagem da Apple, mas pode ser alterada)
+                            </div>
+                            
+                            <!-- Preview da imagem -->
+                            <div class="mt-3" id="imagePreview">
+                                <img src="https://api.prookit.com/storage/files/1/WhatsApp%20Image%202025-08-16%20at%2012.47.30.png" 
+                                     class="image-preview" alt="Preview da imagem">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Preview da Mensagem -->
+                    <div class="message-preview">
+                        <h6><i class="fas fa-eye me-2"></i>Preview da Mensagem</h6>
+                        <div class="message-content" id="messagePreview">
+                            <span class="apple-emoji"></span>Alerta Apple<br><br>
+                            Olá <strong id="previewNome">[Nome]</strong>, somos do suporte da Apple e tenho informações importantes sobre seu dispositivo.<br><br>
+                            Seu <strong id="previewModelo">[Modelo]</strong> emitiu uma nova localização. Para acessar agora em tempo real, clique no botão <strong id="previewNomeBtn">[Nome do Botão]</strong>.<br><br>
+                            Atenciosamente,<br>
+                            <small id="previewFooter">Copyright © 2025 Apple Inc. Todos os direitos reservados.</small>
+                        </div>
+                    </div>
+
+                    <!-- Loading -->
+                    <div class="loading" id="loading">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Enviando...</span>
+                        </div>
+                        <p class="mt-2">Enviando mensagem...</p>
+                    </div>
+
+                    <!-- Botão de Envio -->
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <button type="submit" class="btn btn-send btn-lg" id="sendButton">
+                                <i class="fab fa-apple me-2"></i>
+                                Enviar Mensagem Apple Support
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Área de Resposta -->
+                <div class="response-area" id="responseArea" style="display: none;">
+                    <h6><i class="fas fa-reply me-2"></i>Resposta da API</h6>
+                    <div class="response-content" id="responseContent"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        /**
+         * Apple Support Form - Mensagem Pré-definida
+         * Formulário específico para mensagem de suporte da Apple
+         */
+        class AppleSupportForm {
+            constructor() {
+                this.init();
+            }
+
+            init() {
+                this.bindEvents();
+                this.setupFormValidation();
+                this.updatePreview();
+            }
+
+            bindEvents() {
+                // Preview em tempo real
+                ['nome', 'modelo', 'nomeBtn'].forEach(fieldId => {
+                    document.getElementById(fieldId).addEventListener('input', () => {
+                        this.updatePreview();
+                    });
+                });
+
+                // Preview da imagem
+                document.getElementById('imageUrl').addEventListener('input', (e) => {
+                    this.updateImagePreview(e);
+                });
+
+                // Envio do formulário
+                document.getElementById('messageForm').addEventListener('submit', (e) => {
+                    this.handleFormSubmit(e);
+                });
+            }
+
+            updatePreview() {
+                const nome = document.getElementById('nome').value || '[Nome]';
+                const modelo = document.getElementById('modelo').value || '[Modelo]';
+                const nomeBtn = document.getElementById('nomeBtn').value || '[Nome do Botão]';
+
+                document.getElementById('previewNome').textContent = nome;
+                document.getElementById('previewModelo').textContent = modelo;
+                document.getElementById('previewNomeBtn').textContent = nomeBtn;
+            }
+
+            updateImagePreview(event) {
+                const url = event.target.value;
+                const preview = document.getElementById('imagePreview');
+                
+                if (url && this.isValidUrl(url)) {
+                    preview.innerHTML = `<img src="${url}" class="image-preview" alt="Preview da imagem" 
+                         onerror="this.parentElement.innerHTML='<div class=\\"text-warning\\"><i class=\\"fas fa-exclamation-triangle me-1\\"></i>Erro ao carregar imagem</div>'">`;
+                } else if (url) {
+                    preview.innerHTML = '<div class="text-warning"><i class="fas fa-exclamation-triangle me-1"></i>URL inválida</div>';
+                } else {
+                    preview.innerHTML = '<div class="text-muted">Nenhuma imagem selecionada</div>';
+                }
+            }
+
+            isValidUrl(string) {
+                try {
+                    new URL(string);
+                    return true;
+                } catch (_) {
+                    return false;
+                }
+            }
+
+            setupFormValidation() {
+                const forms = document.querySelectorAll('.needs-validation');
+                Array.from(forms).forEach(form => {
+                    form.addEventListener('submit', (event) => {
+                        if (!form.checkValidity()) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    });
+                });
+            }
+
+            async handleFormSubmit(event) {
+                event.preventDefault();
+                
+                if (!this.validateForm()) {
+                    this.showAlert('Por favor, corrija os erros no formulário!', 'danger');
+                    return;
+                }
+
+                const formData = this.collectFormData();
+                
+                // Mostrar loading
+                this.showLoading(true);
+                
+                try {
+                    const response = await this.sendToAPI(formData);
+                    this.handleAPIResponse(response);
+                } catch (error) {
+                    this.showAlert('Erro ao enviar mensagem: ' + error.message, 'danger');
+                } finally {
+                    this.showLoading(false);
+                }
+            }
+
+            validateForm() {
+                let isValid = true;
+                
+                // Validar campos obrigatórios
+                const requiredFields = ['sender', 'number', 'nome', 'modelo', 'nomeBtn', 'urlLink'];
+                requiredFields.forEach(fieldName => {
+                    const field = document.getElementById(fieldName);
+                    if (!field.value.trim()) {
+                        field.classList.add('is-invalid');
+                        isValid = false;
+                    } else {
+                        field.classList.remove('is-invalid');
+                    }
+                });
+
+                // Validar URL do link
+                const urlLink = document.getElementById('urlLink').value;
+                if (urlLink && !this.isValidUrl(urlLink)) {
+                    document.getElementById('urlLink').classList.add('is-invalid');
+                    isValid = false;
+                }
+
+                // Validar URL da imagem (se preenchida)
+                const imageUrl = document.getElementById('imageUrl').value;
+                if (imageUrl && !this.isValidUrl(imageUrl)) {
+                    document.getElementById('imageUrl').classList.add('is-invalid');
+                    isValid = false;
+                }
+
+                return isValid;
+            }
+
+            collectFormData() {
+                const nome = document.getElementById('nome').value;
+                const modelo = document.getElementById('modelo').value;
+                const nomeBtn = document.getElementById('nomeBtn').value;
+                const urlLink = document.getElementById('urlLink').value;
+
+                // Construir mensagem com placeholders substituídos
+                const message = `🍎 EMOJI APPLE
+
+Olá ${nome}, somos do suporte da Apple e tenho informações importantes sobre seu dispositivo.
+
+Seu ${modelo} emitiu uma nova localização. Para acessar agora em tempo real, clique no botão ${nomeBtn}.
+
+Atenciosamente,`;
+
+                const footer = "Copyright © 2025 Apple Inc. Todos os direitos reservados.";
+
+                const formData = {
+                    api_key: document.getElementById('apiKey').value,
+                    sender: document.getElementById('sender').value,
+                    number: document.getElementById('number').value,
+                    message: message,
+                    footer: footer,
+                    url: document.getElementById('imageUrl').value,
+                    button: [
+                        {
+                            type: "url",
+                            displayText: nomeBtn,
+                            url: urlLink
+                        }
+                    ]
+                };
+
+                return formData;
+            }
+
+            async sendToAPI(formData) {
+                const apiUrl = document.getElementById('apiUrl').value;
+                
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                return await response.json();
+            }
+
+            handleAPIResponse(response) {
+                // Mostrar resposta da API
+                const responseArea = document.getElementById('responseArea');
+                const responseContent = document.getElementById('responseContent');
+                
+                responseContent.textContent = JSON.stringify(response, null, 2);
+                responseArea.style.display = 'block';
+                responseArea.scrollIntoView({ behavior: 'smooth' });
+
+                // Mostrar alerta baseado na resposta
+                if (response.status) {
+                    this.showAlert(`
+                        <strong>Mensagem Apple Support enviada com sucesso!</strong><br>
+                        <small>Status: ${response.status}</small><br>
+                        <small>Mensagem: ${response.msg || 'Enviado'}</small>
+                    `, 'success');
+                } else {
+                    this.showAlert(`
+                        <strong>Erro ao enviar mensagem!</strong><br>
+                        <small>Status: ${response.status}</small><br>
+                        <small>Erro: ${response.msg || 'Erro desconhecido'}</small>
+                    `, 'danger');
+                }
+            }
+
+            showLoading(show) {
+                const loading = document.getElementById('loading');
+                const sendButton = document.getElementById('sendButton');
+                
+                if (show) {
+                    loading.style.display = 'block';
+                    sendButton.disabled = true;
+                    sendButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Enviando...';
+                } else {
+                    loading.style.display = 'none';
+                    sendButton.disabled = false;
+                    sendButton.innerHTML = '<i class="fab fa-apple me-2"></i>Enviar Mensagem Apple Support';
+                }
+            }
+
+            showAlert(message, type = 'info') {
+                const alertContainer = document.getElementById('alertContainer');
+                const alertId = 'alert-' + Date.now();
+                
+                const alertHtml = `
+                    <div id="${alertId}" class="alert alert-${type} alert-dismissible fade show" role="alert">
+                        ${message}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                `;
+                
+                alertContainer.insertAdjacentHTML('beforeend', alertHtml);
+                
+                // Auto-remove após 5 segundos para alerts de sucesso/info
+                if (['success', 'info'].includes(type)) {
+                    setTimeout(() => {
+                        const alert = document.getElementById(alertId);
+                        if (alert) {
+                            alert.remove();
+                        }
+                    }, 5000);
+                }
+            }
+        }
+
+        // Inicializar quando o DOM estiver carregado
+        document.addEventListener('DOMContentLoaded', () => {
+            new AppleSupportForm();
+        });
+    </script>
+</body>
+</html>
